@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import utils.HttpUtils;
 import utils.MetadataListener;
 import utils.StaticData;
 
@@ -41,16 +43,23 @@ public class HookEntry implements IXposedHookLoadPackage {
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         super.beforeHookedMethod(param);
                     }
+
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         super.afterHookedMethod(param);
                         Context context = null;
+                        StaticData.globalContext = context;
                         if (param.args[0] instanceof Application) {
                             context = ((Application) param.args[0]).getApplicationContext();
                         } else {
                             return;
                         }
-                        Toast.makeText(context, context.getPackageName()+"is hooked ", Toast.LENGTH_SHORT).show();
+                        StaticData.package_name = context.getPackageName();
+                        if(!StaticData.hasStart){
+                            Toast.makeText(context, context.getPackageName() + "is hooked ", Toast.LENGTH_SHORT).show();
+                            StaticData.hasStart = true;
+                        }
+
                     }
                 });
     }

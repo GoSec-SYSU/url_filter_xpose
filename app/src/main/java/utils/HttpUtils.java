@@ -12,29 +12,56 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSON;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class DownloadUtil {
-    public static String downloadJSONByOkHttp(String url) {
+public class HttpUtils {
+    public static void log(String str) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
+        MultipartBody formBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("log", str)
                 .build();
-        String result = "";
+        Request request = new Request.Builder()
+                .url(StaticData.logURL)
+                .post(formBody)
+                .build();
         try {
             Response response = client.newCall(request).execute();
-            result = response.body().string();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+    }
+    public static String downloadJSONByOkHttp(String url) {
+        Map<String, Map<String, Object>> result = new HashMap<>();
+        try {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(1, TimeUnit.SECONDS)//设置连接超时时间
+                    .readTimeout(2, TimeUnit.SECONDS)//设置读取超时时间
+                    .build();
+            MultipartBody formBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("package_name", "tv.danmaku.bili") // temp
+                    .build();
+            Request request = new Request.Builder()
+                    .url(StaticData.sinkByPackageNameURL)
+                    .post(formBody)
+                    .build();
+            Response response = client.newCall(request).execute();
+            result = (Map<String, Map<String, Object>>) JSON.parse(response.body().string());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result.toString();
     }
     // JSON字符串下载
     public static String downloadJSON(String path)  {

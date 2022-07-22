@@ -8,5 +8,5 @@ import java.util.Map;
  * Created by yangxiangjun on 2020/12/21.
  */
 public interface Observer {
-    void call(Map<String, Map<String, Map<String, List<List<Object>>>>> appMp);
+    void call(Map<String, Map<String, Object>> appMp);
 }

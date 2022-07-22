@@ -55,4 +55,6 @@ dependencies {
     implementation group: 'ch.ethz.ganymed', name: 'ganymed-ssh2', version: '262'
 
 //    compileOnly 'org.apache.httpcomponents:httpcore:4.4.10'
+
+    api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
 }

@@ -23,11 +23,11 @@ public class HookObserver implements Observer{
     }
 
     @Override
-    public void call(Map<String, Map<String, Map<String, List<List<Object>>>>> appMp) {
+    public void call(Map<String, Map<String, Object>> appMp) {
         // do somethink
         // unhook before
         hooker.unhook(unhookList);
         // hook now
-        unhookList = hooker.hook(lpparam, appMp);
+        unhookList = hooker.hookWithSourceAndSink(lpparam, appMp);
     }
 }

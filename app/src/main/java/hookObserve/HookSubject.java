@@ -32,7 +32,7 @@ public class HookSubject implements Subject {
     }
 
     @Override
-    public void notifyObserver(Map<String, Map<String, Map<String, List<List<Object>>>>> appMp) {
+    public void notifyObserver(Map<String, Map<String, Object>> appMp) {
         CompletableFuture[] futures = new CompletableFuture[observers.size()];
         observers.stream().forEach(observer -> {
             final CompletableFuture<Void> future = CompletableFuture.runAsync(() -> observer.call(appMp));

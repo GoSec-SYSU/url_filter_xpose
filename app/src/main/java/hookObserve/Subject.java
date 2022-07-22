@@ -23,5 +23,5 @@ public interface Subject {
     /**
      * 主题有变化时通知观察者
      */
-    void notifyObserver(Map<String, Map<String, Map<String, List<List<Object>>>>> appMp);
+    void notifyObserver(Map<String, Map<String, Object>> appMp);
 }

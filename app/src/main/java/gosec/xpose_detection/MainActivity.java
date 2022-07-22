@@ -2,7 +2,6 @@ package gosec.xpose_detection;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,15 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Method;
-import java.util.Objects;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import utils.DownloadUtil;
+import utils.HttpUtils;
 import utils.StaticData;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         Button classLoadButton = (Button) findViewById(R.id.class_load);
         TextView sinkView = (TextView) findViewById(R.id.sink);
         urlEdit.setText(StaticData.sinkURL);
+
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String path = urlEdit.getText().toString();
-                            String resp = DownloadUtil.downloadJSONByOkHttp(path);
+                            String resp = HttpUtils.downloadJSONByOkHttp(path);
                             sinkView.setText(resp);
                         } catch (Exception e){
                             e.printStackTrace();

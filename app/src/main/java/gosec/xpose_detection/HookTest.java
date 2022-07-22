@@ -1,17 +1,6 @@
 package gosec.xpose_detection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import hook.HookLogic;
-import utils.MetadataListener;
 import de.robv.android.xposed.IXposedHookLoadPackage;
-
-import de.robv.android.xposed.XC_MethodHook;
-
-import de.robv.android.xposed.XposedHelpers;
 
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
